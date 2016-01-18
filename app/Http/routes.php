@@ -23,8 +23,15 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function() {
     // this ensures that a user can't access api/create or api/edit when there's nothing there
     Route::resource('comments', 'CommentController',
         array('only' => array('index', 'show', 'store', 'destroy')));
-
 });
+
+Route::group(['prefix' => 'api'], function() {
+    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
+    Route::post('authenticate', 'AuthenticateController@authenticate');
+    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+});
+
+
 
 
 
